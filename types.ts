@@ -15,6 +15,14 @@ export interface ZennArticle {
   sourceRepoUpdatedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
+  bodyHtml?: string;
+  ogImageUrl?: string;
+  badgeList?: Array<[string, number]>;
+  shouldNoindex: boolean;
+  isMine: boolean;
+  isPreview: boolean;
+  currentUserLiked: boolean;
+  githubRepository?: string;
   user: ZennUser;
   topics: ZennTopic[];
 }
