@@ -3,8 +3,8 @@ allow:
 
 scripts:
   start:
-    desc: Start server
-    cmd: server.ts
+    desc: Start local server
+    cmd: debug.ts
   test: deno test
   lint: deno lint
   format: deno fmt
