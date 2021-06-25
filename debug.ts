@@ -1,5 +1,5 @@
-import { serve } from "./deps.ts";
-import handler from "./server.ts";
+import { serve } from "./api/deps.ts";
+import handler from "./api/server.ts";
 
 const server = serve({ port: 8080 });
 console.log(`HTTP webserver running.  Access it at: http://localhost:8080/`);

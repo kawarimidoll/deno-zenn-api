@@ -1,12 +1,12 @@
-import { assert } from "./deps.ts";
-import { zennApi } from "./zenn_api.ts";
+import { assert } from "./api/deps.ts";
 import {
   implementsZennArticle,
   implementsZennBook,
   implementsZennScrap,
   implementsZennTopic,
   implementsZennUser,
-} from "./types.ts";
+  zennApi,
+} from "./mod.ts";
 
 Deno.test("Top page", async () => {
   const result = await zennApi();

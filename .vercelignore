@@ -1,7 +1,3 @@
 /*
-!deps.ts
-!server.ts
-!types.ts
+!api
 !vercel.json
-!zenn_api.ts
-!zenn_link.ts
