@@ -1,4 +1,5 @@
 {
+  "env": { "DENO_UNSTABLE": "true" },
   "functions": {
     "api/server.ts": {
       "runtime": "vercel-deno@0.8.0",
