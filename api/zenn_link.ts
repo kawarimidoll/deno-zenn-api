@@ -14,6 +14,10 @@ import {
 const zennLink = (
   object: ZennArticle | ZennBook | ZennScrap | ZennUser | ZennTopic,
 ): string => {
+  if (!object) {
+    return ZENN_ROOT;
+  }
+
   if (implementsZennUser(object)) {
     return ZENN_ROOT + object.username;
   }
