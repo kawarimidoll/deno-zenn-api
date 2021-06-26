@@ -7,6 +7,9 @@ console.log(`HTTP webserver running. Access it at: http://localhost:${port}/`);
 for await (const request of server) {
   (async () => {
     const httpCon = Deno.serveHttp(request);
-    await handler(httpCon);
+
+    for await (const event of httpCon) {
+      handler(event);
+    }
   })();
 }
