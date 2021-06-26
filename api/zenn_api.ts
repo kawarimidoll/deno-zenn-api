@@ -22,7 +22,7 @@ const callAPI = async (path = "", searchParams: SearchParamsOption) => {
 
 const zennApi = async (page = "", query = {}) => {
   try {
-    return await callAPI(page, query);
+    return await callAPI(page.startsWith("/") ? page.slice(1) : page, query);
   } catch (error) {
     return { error: error.toString(), page, query };
   }
