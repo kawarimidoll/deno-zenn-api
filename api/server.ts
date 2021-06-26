@@ -3,8 +3,7 @@ import { zennApi } from "./zenn_api.ts";
 // cache one hour
 const CACHE_MAX_AGE = 3600;
 
-export default async (request: Deno.Conn) => {
-  const httpCon = Deno.serveHttp(request);
+export default async (httpCon: Deno.HttpConn) => {
   for await (const event of httpCon) {
     const { url } = event.request;
     const { pathname } = new URL(url);
