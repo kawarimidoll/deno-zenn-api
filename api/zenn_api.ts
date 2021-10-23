@@ -17,6 +17,19 @@ const callAPI = async (path = "", searchParams: SearchParamsOption) => {
 
   const { props, page, query } = JSON.parse(data.innerText);
 
+  // rename keys with remove 'res' prefix
+  // example:
+  //   props.pageProps.user = props.pageProps.resUser;
+  Object.keys(props.pageProps).filter((key) => /^res[A-Z]/.test(key)).forEach(
+    (resKey) => {
+      const key = resKey.charAt(3).toLowerCase() + resKey.slice(4);
+
+      if (!Object.hasOwn(props.pageProps, key)) {
+        props.pageProps[key] = props.pageProps[resKey];
+      }
+    },
+  );
+
   return { ...props.pageProps, page, query };
 };
 
