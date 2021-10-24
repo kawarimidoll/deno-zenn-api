@@ -1,6 +1,6 @@
-export { ZENN_ROOT, zennApi } from "./api/zenn_api.ts";
+export { ZENN_ROOT, zennApi } from "./zenn_api.ts";
 
-export { zennLink } from "./api/zenn_link.ts";
+export { zennLink } from "./zenn_link.ts";
 
 export type {
   ZennArticle,
@@ -8,7 +8,7 @@ export type {
   ZennScrap,
   ZennTopic,
   ZennUser,
-} from "./api/types.ts";
+} from "./types.ts";
 
 export {
   implementsZennArticle,
@@ -16,4 +16,4 @@ export {
   implementsZennScrap,
   implementsZennTopic,
   implementsZennUser,
-} from "./api/types.ts";
+} from "./types.ts";
