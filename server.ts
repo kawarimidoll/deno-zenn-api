@@ -1,18 +1,42 @@
-import { listenAndServe } from "./deps.ts";
+/// <reference path="./_deploy.d.ts" />
 import { zennApi } from "./zenn_api.ts";
+
+const port = 8080;
+const listener = Deno.listen({ port });
+const isProd = !!Deno.env.get("DENO_DEPLOYMENT_ID");
+
+if (!isProd) {
+  console.log(`HTTP server listening on http://localhost:${port}`);
+}
 
 // cache one hour
 const CACHE_MAX_AGE = 3600;
 
-const addr = ":8000";
-console.log(`server running at http://localhost${addr}`);
+async function handleConn(conn: Deno.Conn) {
+  const httpConn = Deno.serveHttp(conn);
+  for await (const e of httpConn) {
+    e.respondWith(handler(e.request));
+  }
+}
 
-listenAndServe(addr, async (request) => {
-  const url = new URL(request.url);
-  const body = JSON.stringify(await zennApi(url.pathname));
+async function handler(request: Request) {
+  const { pathname } = new URL(request.url);
+  console.log({ pathname });
+
+  const result = await zennApi(pathname);
+  const status = Object.hasOwn(result, "error") ? 400 : 200;
+  const body = JSON.stringify(result);
   const headers = new Headers({
-    "Cache-Control": `public, max-age=${CACHE_MAX_AGE}`,
     "Content-Type": "application/json",
   });
-  return new Response(body, { status: 200, headers });
-});
+
+  if (isProd) {
+    headers.set("Cache-Control", `public, max-age=${CACHE_MAX_AGE}`);
+  }
+
+  return new Response(body, { status, headers });
+}
+
+for await (const conn of listener) {
+  handleConn(conn);
+}
