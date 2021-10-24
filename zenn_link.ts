@@ -11,9 +11,14 @@ import {
   ZennUser,
 } from "./types.ts";
 
-const zennLink = (
+/**
+ * Generate URL to Zenn by given object.
+ * @param object Zenn object
+ * @return Zenn URL
+ */
+export function zennLink(
   object: ZennArticle | ZennBook | ZennScrap | ZennUser | ZennTopic,
-): string => {
+): string {
   if (!object) {
     return ZENN_ROOT;
   }
@@ -35,6 +40,4 @@ const zennLink = (
     : "/scrap/";
 
   return ZENN_ROOT + username + resourceName + object.slug;
-};
-
-export { zennLink };
+}

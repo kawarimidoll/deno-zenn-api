@@ -1,5 +1,6 @@
 import { DOMParser, ky, SearchParamsOption } from "./deps.ts";
-const ZENN_ROOT = "https://zenn.dev/";
+
+export const ZENN_ROOT = "https://zenn.dev/";
 
 const callAPI = async (path = "", searchParams: SearchParamsOption) => {
   const html = await ky(path, { prefixUrl: ZENN_ROOT, searchParams }).text();
@@ -15,7 +16,7 @@ const callAPI = async (path = "", searchParams: SearchParamsOption) => {
     throw new Error("There is no data field");
   }
 
-  const { props, page, query } = JSON.parse(data.innerText);
+  const { props, pathname, query } = JSON.parse(data.innerText);
 
   // rename keys with remove 'res' prefix
   // example:
@@ -26,19 +27,32 @@ const callAPI = async (path = "", searchParams: SearchParamsOption) => {
 
       if (!Object.hasOwn(props.pageProps, key)) {
         props.pageProps[key] = props.pageProps[resKey];
+        // delete props.pageProps[resKey];
       }
     },
   );
 
-  return { ...props.pageProps, page, query };
+  return { ...props.pageProps, pathname, query };
 };
 
-const zennApi = async (page = "", query = {}) => {
+/**
+ * Generate URL to Zenn by given object.
+ * @param pathname pathname of the Zenn page
+ * @param query query of the Zenn page
+ * @return Object that the page displays, pathname, query
+ *
+ * Example:
+ *
+ * ```ts
+ * import { zennApi } from "https://pax.deno.dev/kawarimidoll/deno-zenn-api";
+ * const result = await zennApi("kawarimidoll");
+ * console.log({ result });
+ * ```
+ */
+export async function zennApi(pathname = "", query = {}) {
   try {
-    return await callAPI(page.startsWith("/") ? page.slice(1) : page, query);
+    return await callAPI(pathname.replace(/^\//, ""), query);
   } catch (error) {
-    return { error: error.toString(), page, query };
+    return { error: error.toString(), pathname, query };
   }
-};
-
-export { ZENN_ROOT, zennApi };
+}
