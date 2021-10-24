@@ -1,4 +1,4 @@
-import { assert } from "./api/deps.ts";
+import { assert } from "./deps.ts";
 import {
   implementsZennArticle,
   implementsZennBook,

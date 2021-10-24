@@ -34,6 +34,8 @@ scripts:
     desc: Runs the tests
     cmd: deno test --reload
     gitHook: pre-push
+    allow:
+      - net
 
   cov:
     desc: Shows uncovered lists
