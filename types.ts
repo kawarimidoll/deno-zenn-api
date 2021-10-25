@@ -26,9 +26,15 @@ export interface ZennArticle {
   user: ZennUser;
   topics: ZennTopic[];
 }
+
+/**
+ * Type guard for ZennArticle.
+ */
 // deno-lint-ignore no-explicit-any
-const implementsZennArticle = (object: any): object is ZennArticle =>
-  object && typeof object == "object" && typeof object.articleType == "string";
+export function implementsZennArticle(object: any): object is ZennArticle {
+  return object && typeof object == "object" &&
+    typeof object.articleType == "string";
+}
 
 export interface ZennUser {
   id: number;
@@ -54,9 +60,15 @@ export interface ZennUser {
   booksCount?: number;
   scrapsCount?: number;
 }
+
+/**
+ * Type guard for ZennUser.
+ */
 // deno-lint-ignore no-explicit-any
-const implementsZennUser = (object: any): object is ZennUser =>
-  object && typeof object == "object" && typeof object.username == "string";
+export function implementsZennUser(object: any): object is ZennUser {
+  return object && typeof object == "object" &&
+    typeof object.username == "string";
+}
 
 export interface ZennTopic {
   id: number;
@@ -69,9 +81,15 @@ export interface ZennTopic {
   booksCount?: number;
   scrapsCount?: number;
 }
+
+/**
+ * Type guard for ZennTopic.
+ */
 // deno-lint-ignore no-explicit-any
-const implementsZennTopic = (object: any): object is ZennTopic =>
-  object && typeof object == "object" && typeof object.displayName == "string";
+export function implementsZennTopic(object: any): object is ZennTopic {
+  return object && typeof object == "object" &&
+    typeof object.displayName == "string";
+}
 
 export interface ZennBook {
   id: number;
@@ -87,9 +105,14 @@ export interface ZennBook {
   coverImageSmallUrl: string;
   user: ZennUser;
 }
+
+/**
+ * Type guard for ZennBook.
+ */
 // deno-lint-ignore no-explicit-any
-const implementsZennBook = (object: any): object is ZennBook =>
-  object && typeof object == "object" && typeof object.price == "number";
+export function implementsZennBook(object: any): object is ZennBook {
+  return object && typeof object == "object" && typeof object.price == "number";
+}
 
 export interface ZennScrap {
   id: number;
@@ -109,14 +132,11 @@ export interface ZennScrap {
   user: ZennUser;
 }
 
+/**
+ * Type guard for ZennScrap.
+ */
 // deno-lint-ignore no-explicit-any
-const implementsZennScrap = (object: any): object is ZennScrap =>
-  object && typeof object == "object" && typeof object.closed == "boolean";
-
-export {
-  implementsZennArticle,
-  implementsZennBook,
-  implementsZennScrap,
-  implementsZennTopic,
-  implementsZennUser,
-};
+export function implementsZennScrap(object: any): object is ZennScrap {
+  return object && typeof object == "object" &&
+    typeof object.closed == "boolean";
+}

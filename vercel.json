@@ -1,9 +1,5 @@
 {
-  "functions": {
-    "api/server.ts": {
-      "runtime": "vercel-deno@0.8.0",
-      "includeFiles": "api/*.ts"
-    }
-  },
-  "rewrites": [{ "source": "/(.*)", "destination": "/api/server" }]
+  "redirects": [
+    { "source": "/", "destination": "https://zenn-api.deno.dev" }
+  ]
 }
