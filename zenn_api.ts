@@ -49,7 +49,7 @@ const callAPI = async (path = "", searchParams: SearchParamsOption) => {
  * console.log({ result });
  * ```
  */
-export async function zennApi(pathname = "", query = {}) {
+export async function zennApi(pathname = "", query: SearchParamsOption = {}) {
   try {
     return await callAPI(pathname.replace(/^\//, ""), query);
   } catch (error) {

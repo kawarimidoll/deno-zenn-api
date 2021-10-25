@@ -20,10 +20,10 @@ async function handleConn(conn: Deno.Conn) {
 }
 
 async function handler(request: Request) {
-  const { pathname } = new URL(request.url);
-  console.log({ pathname });
+  const { pathname, searchParams } = new URL(request.url);
+  console.log({ pathname, searchParams });
 
-  const result = await zennApi(pathname);
+  const result = await zennApi(pathname, searchParams);
   const status = Object.hasOwn(result, "error") ? 400 : 200;
   const body = JSON.stringify(result);
   const headers = new Headers({
