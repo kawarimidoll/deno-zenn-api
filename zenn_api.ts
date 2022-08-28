@@ -39,6 +39,10 @@ const feedAPI = async (path = "", searchParams: SearchParamsOption = {}) => {
   const feed = await parseFeed(
     await ky(path, { prefixUrl: ZENN_ROOT, searchParams }).text(),
   );
+  if ((new URLSearchParams(searchParams as string)).get("latest") !== null) {
+    return feed.entries[0];
+  }
+
   return feed;
 };
 
