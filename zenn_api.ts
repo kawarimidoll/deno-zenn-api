@@ -1,4 +1,4 @@
-import { DOMParser, ky, SearchParamsOption } from "./deps.ts";
+import { DOMParser, ky, parseFeed, SearchParamsOption } from "./deps.ts";
 
 export const ZENN_ROOT = "https://zenn.dev/";
 
@@ -35,6 +35,13 @@ const callAPI = async (path = "", searchParams: SearchParamsOption) => {
   return { ...props.pageProps, pathname, query };
 };
 
+const feedAPI = async (path = "", searchParams: SearchParamsOption = {}) => {
+  const feed = await parseFeed(
+    await ky(path, { prefixUrl: ZENN_ROOT, searchParams }).text(),
+  );
+  return feed;
+};
+
 /**
  * Generate URL to Zenn by given object.
  * @param pathname pathname of the Zenn page
@@ -51,6 +58,9 @@ const callAPI = async (path = "", searchParams: SearchParamsOption) => {
  */
 export async function zennApi(pathname = "", query: SearchParamsOption = {}) {
   try {
+    if (/\/[^/]+\/feed/.test(pathname)) {
+      return await feedAPI(pathname.replace(/^\//, ""), query);
+    }
     return await callAPI(pathname.replace(/^\//, ""), query);
   } catch (error) {
     return { error: error.toString(), pathname, query };
